@@ -24,6 +24,10 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 
+//!api endpoints
+import authRoute from "./src/routes/authRoutes.js";
+app.use("/api/v1/auth", authRoute);
+
 //!server status
 app.get("/", (req, res) => {
   res.json({
