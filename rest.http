@@ -11,3 +11,4 @@ GET {{rootUrl}}
 
 ###post new user
 POST {{rootUrl}}/api/v1/auth
+
