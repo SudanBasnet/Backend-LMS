@@ -3,6 +3,7 @@ import { createNewUser } from "../models/User/UserModel.js";
 import { hashPassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
 import { createNewSession } from "../models/Session/SessionModel.js";
+import { userActivationUrlEmail } from "../services/email/emailService.js";
 
 export const insertNewUser = async (req, res, next) => {
   try {
@@ -18,16 +19,22 @@ export const insertNewUser = async (req, res, next) => {
         association: user.email,
       });
       if (session?._id) {
-        const url =
-          "http://localhost:3000?sessionId=" +
-          session._id +
-          "&t=" +
-          session.token;
-        console.log(url);
+        const url = `${process.env.ROOT_URL.ROOT_URL}/activate-user?sessionId=s${session._id}&t=
+          ${session.token}`;
+
+        const activationUrl = url;
+
+        const emailId = await userActivationUrlEmail({
+          email: user.email,
+          activationUrl,
+          name: user.fName,
+        });
+        if (emailId) {
+          const message =
+            "we have sent you an email with activation link. please check you email and follow instructions for activation";
+          return responseClient({ req, res, message });
+        }
       }
-      const message =
-        "we have snt you an email with activation link. please check you email and follow instructions for activation";
-      return responseClient({ req, res, message });
     }
     throw new Error("Unable to create an account, try again later");
   } catch (error) {
