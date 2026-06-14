@@ -1,5 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
+import dbConnect from "./src/config/dbConfig.js";
+import { responseClient } from "./src/middleware/responseClient.js";
+import { errorHandler } from "./src/middleware/errorHandler.js";
+import authRoute from "./src/routes/authRoutes.js";
 const app = express();
 dotenv.config();
 
@@ -13,23 +17,20 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 //!api endpoints
-import authRoute from "./src/routes/authRoutes.js";
+
 app.use("/api/v1/auth", authRoute);
 
 //!server status
 app.get("/", (req, res) => {
-  res.json({
-    message: "server is live",
-  });
+  const message = "server is live";
+  responseClient({ req, res, message });
 });
 
 //!error handler
 
-import { errorHandler } from "./src/middleware/errorHandler.js";
 app.use(errorHandler);
 
 //!DB connection
-import dbConnect from "./src/config/dbConfig.js";
 
 dbConnect()
   .then(() => {
