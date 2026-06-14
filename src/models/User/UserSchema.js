@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 
-const userSchema = new Mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
+    status: {
+      type: String,
+      default: "inactive",
+    },
     fName: {
       type: String,
       required: true,
@@ -17,6 +21,7 @@ const userSchema = new Mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      index: 1,
     },
     password: {
       type: String,
@@ -29,7 +34,6 @@ const userSchema = new Mongoose.Schema(
     },
     refreshJWT: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true },
