@@ -1,10 +1,17 @@
 import { responseClient } from "../middleware/responseClient.js";
-import { createNewUser } from "../models/User/UserModel.js";
+import { createNewUser, updateUser } from "../models/User/UserModel.js";
 import { hashPassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
-import { createNewSession } from "../models/Session/SessionModel.js";
-import { userActivationUrlEmail } from "../services/email/emailService.js";
+import {
+  createNewSession,
+  deleteSession,
+} from "../models/Session/SessionModel.js";
+import {
+  userActivatedNotificationEmail,
+  userActivationUrlEmail,
+} from "../services/email/emailService.js";
 
+//!insert new user
 export const insertNewUser = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -19,8 +26,7 @@ export const insertNewUser = async (req, res, next) => {
         association: user.email,
       });
       if (session?._id) {
-        const url = `${process.env.ROOT_URL.ROOT_URL}/activate-user?sessionId=s${session._id}&t=
-          ${session.token}`;
+        const url = `${process.env.ROOT_URL}/activate-user?sessionId=${session._id}&t=${session.token}`;
 
         const activationUrl = url;
 
@@ -42,6 +48,40 @@ export const insertNewUser = async (req, res, next) => {
       error.message = "Email already exists";
       error.statusCode = 400;
     }
+    next(error);
+  }
+};
+
+//!activate User
+export const activateUser = async (req, res, next) => {
+  try {
+    const { sessionId, t } = req.body;
+
+    const session = await deleteSession({
+      _id: sessionId,
+      token: t,
+    });
+
+    if (session?._id) {
+      //update user to active
+      const user = await updateUser(
+        { email: session.association },
+        { status: "active" },
+      );
+      if (user?._id) {
+        //send email notification
+        await userActivatedNotificationEmail({
+          email: user.email,
+          name: user.fName,
+        });
+        const message = "Your account has been activated, you may login now";
+        return responseClient({ req, res, message });
+      }
+    }
+    const message = "invalid link or token expired!";
+    const statusCode = 400;
+    responseClient({ req, res, message, statusCode });
+  } catch (error) {
     next(error);
   }
 };
