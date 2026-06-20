@@ -11,8 +11,8 @@ export const EMAIL_REQ = EMAIL.required();
 
 export const PHONE = Joi.number().min(5);
 export const PHONE_REQ = Joi.number().min(5);
-
-export const PASSWORD = Joi.string()
+export const PASSWORD = Joi.string();
+export const PASSWORD_REQ = Joi.string()
   .min(6) // Must contain at least 6 characters.
   .pattern(/[A-Z]/) // Must contain at least one uppercase letter.
   .pattern(/[a-z]/) // Must contain at least one lowercase letter.

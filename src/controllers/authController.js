@@ -1,6 +1,10 @@
 import { responseClient } from "../middleware/responseClient.js";
-import { createNewUser, updateUser } from "../models/User/UserModel.js";
-import { hashPassword } from "../utils/bcrypt.js";
+import {
+  createNewUser,
+  getUserByEmail,
+  updateUser,
+} from "../models/User/UserModel.js";
+import { comparePassword, hashPassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
 import {
   createNewSession,
@@ -37,7 +41,7 @@ export const insertNewUser = async (req, res, next) => {
         });
         if (emailId) {
           const message =
-            "we have sent you an email with activation link. please check you email and follow instructions for activation";
+            "we have sent you an email with activation link. please check your email and follow instructions for activation";
           return responseClient({ req, res, message });
         }
       }
@@ -80,6 +84,40 @@ export const activateUser = async (req, res, next) => {
     }
     const message = "invalid link or token expired!";
     const statusCode = 400;
+    responseClient({ req, res, message, statusCode });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//!User Login feature
+export const loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    console.log(email, password);
+    const user = await getUserByEmail(email);
+    if (user?._id) {
+      console.log(user);
+      //* Compare password
+
+      const isPassMatch = comparePassword(password, user.password);
+      if (isPassMatch) {
+        console.log("authenticated successful");
+        //*Create JWT
+        const JWTs = {};
+        //*response JWT
+        return responseClient({
+          req,
+          res,
+          message: "Login Successful",
+
+          payload: JWTs,
+        });
+      }
+    }
+
+    const message = "Invalid credentials";
+    const statusCode = 401;
     responseClient({ req, res, message, statusCode });
   } catch (error) {
     next(error);

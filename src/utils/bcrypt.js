@@ -4,3 +4,7 @@ const saltRounds = 15;
 export const hashPassword = (plainPassword) => {
   return bcrypt.hashSync(plainPassword, saltRounds);
 };
+//!compare password
+export const comparePassword = (plainPassword, hashPassword) => {
+  return bcrypt.compareSync(plainPassword, hashPassword);
+};

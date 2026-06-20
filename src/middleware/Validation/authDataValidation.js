@@ -4,7 +4,7 @@ import {
   EMAIL_REQ,
   FNAME_REQ,
   LNAME_REQ,
-  PASSWORD,
+  PASSWORD_REQ,
   PHONE,
   SESSION_REQ,
   TOKEN_REQ,
@@ -19,7 +19,7 @@ export const newUserDataValidation = (req, res, next) => {
     phone: PHONE,
 
     // Validate the password on the server as well as on the client.
-    password: PASSWORD,
+    password: PASSWORD_REQ,
   };
   validateData({ req, res, next, obj });
 };
@@ -29,6 +29,15 @@ export const userActivationDataValidation = (req, res, next) => {
   const obj = {
     sessionId: SESSION_REQ,
     t: TOKEN_REQ,
+  };
+  validateData({ req, res, next, obj });
+};
+
+//!Login Data Validation
+export const loginDataValidation = (req, res, next) => {
+  const obj = {
+    email: EMAIL_REQ,
+    password: PASSWORD_REQ,
   };
   validateData({ req, res, next, obj });
 };

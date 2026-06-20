@@ -26,8 +26,20 @@ POST {{rootUrl}}/api/v1/auth/activate-user
 Content-Type: application/json
 
 {
-  "sessionId": "6a2fe6de82ad4c3c7da66759",
+  "sessionId": "juhgjhjkghuujghku",
   "t": "de4bc1ec-b10e-45a0-b7bb-60e5c2bab4e7"
 
 }
 
+
+###Login User
+
+POST {{rootUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+
+  "email": "adsgmail.com",
+  "password": "aaAA@@"
+  
+}
