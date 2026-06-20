@@ -14,11 +14,11 @@ POST {{rootUrl}}/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "fName": "John",
-  "lName": "Doe",
-  "email": "adsfgh@gmail.com",
-  "password": "aaAA@@22",
-  "phone": "1234567890"
+  "fName": "Johnn",
+  "lName": "Doeee",
+  "email": "ads@gmail.com",
+  "password": "aaAA@@"
+  
 }
 
 ###post Activate user
