@@ -14,6 +14,7 @@ import {
   userActivatedNotificationEmail,
   userActivationUrlEmail,
 } from "../services/email/emailService.js";
+import { getJwts } from "../utils/jwt.js";
 
 //!insert new user
 export const insertNewUser = async (req, res, next) => {
@@ -104,14 +105,13 @@ export const loginUser = async (req, res, next) => {
       if (isPassMatch) {
         console.log("authenticated successful");
         //*Create JWT
-        const JWTs = {};
+        const jwts = await getJwts(email);
         //*response JWT
         return responseClient({
           req,
           res,
           message: "Login Successful",
-
-          payload: JWTs,
+          payload: jwts,
         });
       }
     }

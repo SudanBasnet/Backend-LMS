@@ -16,8 +16,8 @@ Content-Type: application/json
 {
   "fName": "Johnn",
   "lName": "Doeee",
-  "email": "ads@gmail.com",
-  "password": "aaAA@@"
+  "email": "sdnbasnet@gmail.com",
+  "password": "aaAA@@11"
   
 }
 
@@ -39,7 +39,7 @@ Content-Type: application/json
 
 {
 
-  "email": "adsgmail.com",
-  "password": "aaAA@@"
+  "email": "sdnbasnet@gmail.com",
+  "password": "aaAA@@11"
   
 }

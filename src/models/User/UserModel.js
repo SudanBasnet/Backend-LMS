@@ -9,7 +9,7 @@ export const updateUser = (filter, update) => {
   return UserSchema.findOneAndUpdate(filter, update, { new: true });
 };
 
-//!Get  user
+//!Get user
 export const getUserByEmail = (email) => {
   return UserSchema.findOne({ email });
 };
