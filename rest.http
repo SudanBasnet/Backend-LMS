@@ -43,3 +43,11 @@ Content-Type: application/json
   "password": "aaAA@@11"
   
 }
+
+
+
+###get User
+
+GET {{rootUrl}}/api/v1/user/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODIyMDQzMDcsImV4cCI6MTc4MjIwNTIwN30.wMTD_k-C7IY2khrOHrkrTmXlvwtKzR-csmXdWoVourY
+

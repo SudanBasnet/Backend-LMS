@@ -104,6 +104,8 @@ export const loginUser = async (req, res, next) => {
       const isPassMatch = comparePassword(password, user.password);
       if (isPassMatch) {
         console.log("authenticated successful");
+        //* Mark the user as active after a successful login
+        await updateUser({ _id: user._id }, { status: "active" });
         //*Create JWT
         const jwts = await getJwts(email);
         //*response JWT
