@@ -49,5 +49,5 @@ Content-Type: application/json
 ###get User
 
 GET {{rootUrl}}/api/v1/user/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODIyMDQzMDcsImV4cCI6MTc4MjIwNTIwN30.wMTD_k-C7IY2khrOHrkrTmXlvwtKzR-csmXdWoVourY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODIyMTIzNDAsImV4cCI6MTc4MjIxMzI0MH0.2sHE5J7_koC6aJaRXTi8kd1l3izj0rtFrH913Rij3Ck
 
