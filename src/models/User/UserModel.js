@@ -13,3 +13,8 @@ export const updateUser = (filter, update) => {
 export const getUserByEmail = (email) => {
   return UserSchema.findOne({ email });
 };
+
+//!Get one user
+export const getOneUser = (filter) => {
+  return UserSchema.findOne(filter);
+};

@@ -5,7 +5,7 @@ import { updateUser } from "../models/User/UserModel.js";
 //!generate accessJWT
 export const createAccessJWT = async (email) => {
   const token = jwt.sign({ email }, process.env.ACCESSJWT_SECRET, {
-    expiresIn: "15min",
+    expiresIn: "1min",
   });
   //store
   const obj = {
@@ -36,7 +36,16 @@ export const getJwts = async (email) => {
   };
 };
 
-//!decode jwt
+//!decode refresh jwt
+export const verifyRefreshJWT = (token) => {
+  try {
+    return jwt.verify(token, process.env.REFRESHJWT_SECRET);
+  } catch (error) {
+    return error.message;
+  }
+};
+
+//!verify jwt
 export const verifyAccessJWT = (token) => {
   try {
     return jwt.verify(token, process.env.ACCESSJWT_SECRET);
