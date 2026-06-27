@@ -8,6 +8,7 @@ import { comparePassword, hashPassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
 import {
   createNewSession,
+  deleteManySession,
   deleteSession,
 } from "../models/Session/SessionModel.js";
 import {
@@ -122,6 +123,23 @@ export const loginUser = async (req, res, next) => {
     const statusCode = 401;
     responseClient({ req, res, message, statusCode });
   } catch (error) {
+    next(error);
+  }
+};
+
+//!user Logout feature
+
+export const logoutUser = async (req, res, next) => {
+  try {
+    //get the token
+    const { email } = req.userInfo;
+    //update refreshtoken to ""
+    await updateUser({ email }, { refreshJWT: "" });
+    ///remove the access JWT from session table
+    await deleteManySession({ association: email });
+    responseClient({ req, res, message: "you are logged out!" });
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 };

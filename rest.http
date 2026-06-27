@@ -54,6 +54,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 
 ###renew accessJWT
 GET {{rootUrl}}/api/v1/auth/renew-jwt
-uthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODIzNTU5NzYsImV4cCI6MTc4NDk0Nzk3Nn0.yL84o53byujkBLqTR72nGceWKQ6_0TTI7FAEaxJ0Ne0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODIzNTYxNjUsImV4cCI6MTc4NDk0ODE2NX0.lyyt3OSzfPdQyGOCOcCvwxQTRTvbZP4x00F_4v0Jjzo
 
 
