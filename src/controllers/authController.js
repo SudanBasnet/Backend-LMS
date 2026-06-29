@@ -12,6 +12,7 @@ import {
   deleteSession,
 } from "../models/Session/SessionModel.js";
 import {
+  passwordResetOTPSendEmail,
   userActivatedNotificationEmail,
   userActivationUrlEmail,
 } from "../services/email/emailService.js";
@@ -32,6 +33,7 @@ export const insertNewUser = async (req, res, next) => {
         token: uuidv4(),
         association: user.email,
       });
+      x;
       if (session?._id) {
         const url = `${process.env.ROOT_URL}/activate-user?sessionId=${session._id}&t=${session.token}`;
 
@@ -152,8 +154,8 @@ export const generateOTP = async (req, res, next) => {
     //get the token
     const { email } = req.body;
     // get user by email
-    const user = await getUserByEmail(email);
-    if (user._id) {
+    const user = typeof email === "string" ? await getUserByEmail(email) : null;
+    if (user?._id) {
       //if valid then generate OTP
       const otp = generateRandomOTP();
       console.log(otp);
@@ -162,9 +164,15 @@ export const generateOTP = async (req, res, next) => {
       const session = await createNewSession({
         token: otp,
         association: email,
+        expire: new Date(Date.now() + 1000 * 60 * 5), // expire in 1000 * 60 *5
       });
       if (session?._id) {
         console.log(session);
+        await passwordResetOTPSendEmail({
+          email,
+          name: user.fName,
+          otp,
+        });
       }
       //send otp to user email
     }

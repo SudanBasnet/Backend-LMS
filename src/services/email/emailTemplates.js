@@ -214,3 +214,111 @@ export const userAccountActivatedNotification = ({ email, name }) => {
 </div>`,
   };
 };
+
+export const passwordResetOTPSendTemplate = ({ email, name, otp }) => {
+  return {
+    from: `"Local Library" <${process.env.SMTP_EMAIL}>`,
+    to: email, //List of receivers
+    subject: "Password Reset OTP",
+    text: `Hello ${name}, your Local Library password reset OTP is ${otp}. This OTP is valid for a short time. If you did not request a password reset, please ignore this email.`,
+    html: `<div style="font-family: Arial, Helvetica, sans-serif; background-color: #f4f6f8; padding: 40px 20px;">
+  <table
+    style="
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    "
+  >
+    <tr>
+      <td
+        style="
+          background: #2563eb;
+          color: white;
+          text-align: center;
+          padding: 30px;
+        "
+      >
+        <h1 style="margin: 0;">📚 Local Library</h1>
+        <p style="margin-top: 10px;">
+          Reset Your Password
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding: 40px;">
+        <h2 style="color: #333;">
+          Hello, ${name}
+        </h2>
+
+        <p style="color: #555; line-height: 1.6;">
+          We received a request to reset your <strong>Local Library</strong>
+          account password. Use the one-time password below to continue.
+        </p>
+
+        <div style="text-align: center; margin: 35px 0;">
+          <p style="color: #666; font-size: 14px; margin-bottom: 12px;">
+            Your OTP is
+          </p>
+          <div
+            style="
+              display: inline-block;
+              background-color: #eff6ff;
+              border: 1px solid #bfdbfe;
+              color: #1d4ed8;
+              padding: 16px 32px;
+              border-radius: 8px;
+              font-size: 32px;
+              font-weight: bold;
+              letter-spacing: 8px;
+              line-height: 1.2;
+            "
+          >
+            ${otp}
+          </div>
+        </div>
+
+        <p style="color: #666; font-size: 14px;">
+          This OTP is valid for a short time. Please do not share this code
+          with anyone.
+        </p>
+
+        <hr
+          style="
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 30px 0;
+          "
+        />
+
+        <p style="font-size: 13px; color: #888;">
+          If you did not request a password reset, please ignore this email.
+        </p>
+
+        <p style="font-size: 14px; color: #555;">
+          Regards,<br />
+          <strong>Local Library Team</strong>
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td
+        style="
+          background: #f8fafc;
+          text-align: center;
+          padding: 20px;
+          font-size: 12px;
+          color: #888;
+        "
+      >
+        © ${new Date().getFullYear()} Local Library. All rights reserved.
+      </td>
+    </tr>
+  </table>
+</div>`,
+  };
+};
