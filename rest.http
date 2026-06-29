@@ -56,4 +56,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 GET {{rootUrl}}/api/v1/auth/renew-jwt
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODIzNTYxNjUsImV4cCI6MTc4NDk0ODE2NX0.lyyt3OSzfPdQyGOCOcCvwxQTRTvbZP4x00F_4v0Jjzo
 
+###OTP request
+POST {{rootUrl}}/api/v1/auth/otp
+Content-Type: application/json
+
+{
+  "email":"sdnbasnet@gmail.com"
+}
 

@@ -16,6 +16,7 @@ import {
   userActivationUrlEmail,
 } from "../services/email/emailService.js";
 import { getJwts } from "../utils/jwt.js";
+import { generateRandomOTP } from "../utils/randomGenerator.js";
 
 //!insert new user
 export const insertNewUser = async (req, res, next) => {
@@ -138,6 +139,37 @@ export const logoutUser = async (req, res, next) => {
     ///remove the access JWT from session table
     await deleteManySession({ association: email });
     responseClient({ req, res, message: "you are logged out!" });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+//!Generate OTP feature
+
+export const generateOTP = async (req, res, next) => {
+  try {
+    //get the token
+    const { email } = req.body;
+    // get user by email
+    const user = await getUserByEmail(email);
+    if (user._id) {
+      //if valid then generate OTP
+      const otp = generateRandomOTP();
+      console.log(otp);
+
+      //store in session table
+      const session = await createNewSession({
+        token: otp,
+        association: email,
+      });
+      if (session?._id) {
+        console.log(session);
+      }
+      //send otp to user email
+    }
+
+    responseClient({ req, res, message: "OTP is sent to your email" });
   } catch (error) {
     console.log(error);
     next(error);
