@@ -15,6 +15,7 @@ import {
   passwordResetOTPSendEmail,
   userActivatedNotificationEmail,
   userActivationUrlEmail,
+  userPasswordUpdatedNotificationEmail,
 } from "../services/email/emailService.js";
 import { getJwts } from "../utils/jwt.js";
 import { generateRandomOTP } from "../utils/randomGenerator.js";
@@ -33,7 +34,6 @@ export const insertNewUser = async (req, res, next) => {
         token: uuidv4(),
         association: user.email,
       });
-      x;
       if (session?._id) {
         const url = `${process.env.ROOT_URL}/activate-user?sessionId=${session._id}&t=${session.token}`;
 
@@ -175,11 +175,49 @@ export const generateOTP = async (req, res, next) => {
         });
       }
       //send otp to user email
+    } else {
+      console.log("Password reset OTP requested for unknown email:", email);
     }
 
     responseClient({ req, res, message: "OTP is sent to your email" });
   } catch (error) {
     console.log(error);
+    next(error);
+  }
+};
+
+//!reset controller
+
+export const resetNewPassword = async (req, res, next) => {
+  try {
+    const { email, password, otp } = req.body;
+
+    //checkotp in sessionTable
+    const session = await deleteSession({ token: otp, association: email });
+    if (session?._id) {
+      //encrypt
+      const hassPass = hashPassword(password);
+      //update user table
+      const user = await updateUser({ email }, { password: hassPass });
+      if (user?._id) {
+        //send email notification
+        await userPasswordUpdatedNotificationEmail({ name: user.fName, email });
+        return responseClient({
+          req,
+          res,
+          message:
+            "your password has been updated successfully, you may login now",
+        });
+      }
+    }
+
+    responseClient({
+      req,
+      res,
+      statusCode: 400,
+      message: "Invalid Data or token is expired",
+    });
+  } catch (error) {
     next(error);
   }
 };

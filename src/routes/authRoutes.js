@@ -5,9 +5,11 @@ import {
   insertNewUser,
   loginUser,
   logoutUser,
+  resetNewPassword,
 } from "../controllers/authController.js";
 import {
   loginDataValidation,
+  newPasswordResetValidation,
   newUserDataValidation,
   userActivationDataValidation,
 } from "../middleware/Validation/authDataValidation.js";
@@ -26,5 +28,6 @@ router.post("/login", loginDataValidation, loginUser);
 router.get("/renew-jwt", renewAccessJWTMiddleware);
 router.get("/logout", userAuthMiddleware, logoutUser);
 router.post("/otp", generateOTP);
+router.post("/reset-password", newPasswordResetValidation, resetNewPassword);
 
 export default router;

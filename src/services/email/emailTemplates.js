@@ -322,3 +322,107 @@ export const passwordResetOTPSendTemplate = ({ email, name, otp }) => {
 </div>`,
   };
 };
+
+export const userPasswordUpdatedNotificationTemplate = ({ email, name }) => {
+  return {
+    from: `"Local Library" <${process.env.SMTP_EMAIL}>`,
+    to: email, //List of receivers
+    subject: "Account Updated Successfully",
+    text: `Hello ${name}, your Local Library account has been updated successfully. If you did not make this change, please contact Local Library support immediately.`,
+    html: `<div style="font-family: Arial, Helvetica, sans-serif; background-color: #f4f6f8; padding: 40px 20px;">
+  <table
+    style="
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    "
+  >
+    <tr>
+      <td
+        style="
+          background: #2563eb;
+          color: white;
+          text-align: center;
+          padding: 30px;
+        "
+      >
+        <h1 style="margin: 0;">📚 Local Library</h1>
+        <p style="margin-top: 10px;">
+          Account Updated
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding: 40px;">
+        <h2 style="color: #333;">
+          Hello, ${name}
+        </h2>
+
+        <p style="color: #555; line-height: 1.6;">
+          Your <strong>Local Library</strong> account information has been
+          updated successfully.
+        </p>
+
+        <p style="color: #555; line-height: 1.6;">
+          This message is a confirmation that changes were made to your
+          account profile.
+        </p>
+
+        <div style="text-align: center; margin: 35px 0;">
+          <a
+            href="${process.env.ROOT_URL}/login"
+            style="
+              background-color: #2563eb;
+              color: #ffffff;
+              text-decoration: none;
+              padding: 14px 30px;
+              border-radius: 8px;
+              font-weight: bold;
+              display: inline-block;
+            "
+          >
+            Login to Account
+          </a>
+        </div>
+
+        <p style="color: #666; font-size: 14px;">
+          If you did not update your account, please contact Local Library
+          support immediately.
+        </p>
+
+        <hr
+          style="
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 30px 0;
+          "
+        />
+
+        <p style="font-size: 14px; color: #555;">
+          Regards,<br />
+          <strong>Local Library Team</strong>
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td
+        style="
+          background: #f8fafc;
+          text-align: center;
+          padding: 20px;
+          font-size: 12px;
+          color: #888;
+        "
+      >
+        © ${new Date().getFullYear()} Local Library. All rights reserved.
+      </td>
+    </tr>
+  </table>
+</div>`,
+  };
+};
