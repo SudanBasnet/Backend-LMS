@@ -12,10 +12,13 @@ import {
   deleteSession,
 } from "../models/Session/SessionModel.js";
 import {
+  passwordResetOTPSendEmail,
   userActivatedNotificationEmail,
   userActivationUrlEmail,
+  userPasswordUpdatedNotificationEmail,
 } from "../services/email/emailService.js";
 import { getJwts } from "../utils/jwt.js";
+import { generateRandomOTP } from "../utils/randomGenerator.js";
 
 //!insert new user
 export const insertNewUser = async (req, res, next) => {
@@ -140,6 +143,81 @@ export const logoutUser = async (req, res, next) => {
     responseClient({ req, res, message: "you are logged out!" });
   } catch (error) {
     console.log(error);
+    next(error);
+  }
+};
+
+//!Generate OTP feature
+
+export const generateOTP = async (req, res, next) => {
+  try {
+    //get the token
+    const { email } = req.body;
+    // get user by email
+    const user = typeof email === "string" ? await getUserByEmail(email) : null;
+    if (user?._id) {
+      //if valid then generate OTP
+      const otp = generateRandomOTP();
+      console.log(otp);
+
+      //store in session table
+      const session = await createNewSession({
+        token: otp,
+        association: email,
+        expire: new Date(Date.now() + 1000 * 60 * 5), // expire in 1000 * 60 *5
+      });
+      if (session?._id) {
+        console.log(session);
+        await passwordResetOTPSendEmail({
+          email,
+          name: user.fName,
+          otp,
+        });
+      }
+      //send otp to user email
+    } else {
+      console.log("Password reset OTP requested for unknown email:", email);
+    }
+
+    responseClient({ req, res, message: "OTP is sent to your email" });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+//!reset controller
+
+export const resetNewPassword = async (req, res, next) => {
+  try {
+    const { email, password, otp } = req.body;
+
+    //checkotp in sessionTable
+    const session = await deleteSession({ token: otp, association: email });
+    if (session?._id) {
+      //encrypt
+      const hassPass = hashPassword(password);
+      //update user table
+      const user = await updateUser({ email }, { password: hassPass });
+      if (user?._id) {
+        //send email notification
+        await userPasswordUpdatedNotificationEmail({ name: user.fName, email });
+        return responseClient({
+          req,
+          res,
+          message:
+            "your password has been updated successfully, you may login now",
+        });
+      }
+    }
+
+    responseClient({
+      req,
+      res,
+      statusCode: 400,
+      message: "Invalid Data or token is expired",
+    });
+  } catch (error) {
     next(error);
   }
 };
