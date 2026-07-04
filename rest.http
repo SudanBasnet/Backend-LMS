@@ -26,8 +26,8 @@ POST {{rootUrl}}/api/v1/auth/activate-user
 Content-Type: application/json
 
 {
-  "sessionId": "juhgjhjkghuujghku",
-  "t": "de4bc1ec-b10e-45a0-b7bb-60e5c2bab4e7"
+  "sessionId": "6a44db91ef479962490af5cb",
+  "t": "815588b7-7427-400e-9f16-a1e51588565c"
 
 }
 
@@ -62,5 +62,15 @@ Content-Type: application/json
 
 {
   "email":"sdnbasnet@gmail.com"
+}
+
+###reset password request
+POST {{rootUrl}}/api/v1/auth/reset-password
+Content-Type: application/json
+
+{
+  "email":"sdnbasnet@gmail.com",
+  "password":"aaAA@@1111",
+  "otp":9167
 }
 
