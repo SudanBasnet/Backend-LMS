@@ -26,3 +26,24 @@ export const SESSION_REQ = Joi.string().min(10).max(30).required();
 export const TOKEN = Joi.string().min(10).max(30);
 export const TOKEN_REQ = Joi.string().min(5).max(40).required();
 export const OTP = Joi.number().min(999).max(9999).required();
+
+//!Book Constants
+
+export const SHORT_STR = Joi.string().min(1).max(100);
+export const SHORT_STR_REQ = SHORT_STR.required();
+
+export const LONG_STR = Joi.string().min(1).max(5000);
+export const LONG_STR_REQ = LONG_STR.required();
+export const YEAR = Joi.number()
+  .integer()
+  .min(1901)
+  .max(new Date().getFullYear());
+export const YEAR_REQ = YEAR.required();
+
+// export const ISBN = Joi.number().integer().min(1000000000).max(99999999999999);
+export const ISBN = Joi.string()
+  .pattern(/^\d{10}$|^\d{13}$/)
+  .messages({
+    "string.pattern.base": "ISBN is not in valid format",
+  });
+export const ISBN_REQ = ISBN.required();

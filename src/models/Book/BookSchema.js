@@ -23,7 +23,7 @@ const bookSchema = new mongoose.Schema(
       required: true,
     },
     isbn: {
-      type: String,
+      type: Number,
       required: true,
     },
     genre: {
