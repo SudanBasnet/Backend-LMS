@@ -74,3 +74,34 @@ Content-Type: application/json
   "otp":9167
 }
 
+
+#### BookAPI
+
+###GET books
+GET {{rootUrl}}/api/v1/books
+
+
+
+###post books
+POST {{rootUrl}}/api/v1/books
+Content-Type: application/json
+
+{
+  "status": "active",
+  "title": "Atomic Habits",
+  "year": "2018",
+  "author": "James Clear",
+  "imgUrl": "https://example.com/images/atomic-habits.jpg",
+  "isbn": "9780735211292",
+  "genre": "Self-help",
+  "available": true,
+  "averagerating": 4.8,
+  "addedBy": {
+    "name": "Admin User",
+    "adminId": "66a1f2b7c9e8a12345678901"
+  },
+  "lastupdatedby": {
+    "name": "Admin User",
+    "adminId": "66a1f2b7c9e8a12345678901"
+  }
+}
