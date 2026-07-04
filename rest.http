@@ -85,6 +85,7 @@ GET {{rootUrl}}/api/v1/books
 ###post books
 POST {{rootUrl}}/api/v1/books
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODMxNTQwMTksImV4cCI6MTc4MzE1NDkxOX0.6KeXHIXUNZloNnWkS9kQlw4vszZ9Z6ZYNqi8UfuY204
 
 {
   "status": "active",
@@ -93,15 +94,7 @@ Content-Type: application/json
   "author": "James Clear",
   "imgUrl": "https://example.com/images/atomic-habits.jpg",
   "isbn": "9780735211292",
-  "genre": "Self-help",
-  "available": true,
-  "averagerating": 4.8,
-  "addedBy": {
-    "name": "Admin User",
-    "adminId": "66a1f2b7c9e8a12345678901"
-  },
-  "lastupdatedby": {
-    "name": "Admin User",
-    "adminId": "66a1f2b7c9e8a12345678901"
-  }
+  "genre": "Self-help"
+
+
 }

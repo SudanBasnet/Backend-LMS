@@ -85,3 +85,19 @@ export const renewAccessJWTMiddleware = async (req, res, next) => {
     statusCode: 401,
   });
 };
+
+//! check user role admin
+export const adminAuthMiddleware = (req, res, next) => {
+  try {
+    req.userInfo.role === "admin"
+      ? next()
+      : responseClient({
+          req,
+          res,
+          message: " you do not have access to this resources",
+          statusCode: 403,
+        });
+  } catch (error) {
+    next(error);
+  }
+};
