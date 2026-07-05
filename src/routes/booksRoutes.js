@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  deleteBookController,
   getAllBooksController,
   getAllPublicBooksController,
   insertNewBook,
@@ -39,6 +40,13 @@ router.put(
   adminAuthMiddleware,
   updateBookDataValidation,
   updateBookController,
+);
+//!delete the book
+router.delete(
+  "/:_id",
+  userAuthMiddleware,
+  adminAuthMiddleware,
+  deleteBookController,
 );
 
 export default router;

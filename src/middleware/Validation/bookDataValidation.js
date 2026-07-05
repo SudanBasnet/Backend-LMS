@@ -32,7 +32,7 @@ export const updateBookDataValidation = (req, res, next) => {
     year: YEAR_REQ,
     author: SHORT_STR_REQ,
     imgUrl: LONG_STR_REQ,
-    isbn: ISBN_REQ,
+
     genre: SHORT_STR_REQ,
     description: LONG_STR_REQ,
     expectedAvailable: EXPECTEDAVAILABLE,

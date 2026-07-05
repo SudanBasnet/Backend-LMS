@@ -1,6 +1,7 @@
 import { responseClient } from "../middleware/responseClient.js";
 import {
   createNewBook,
+  deleteBook,
   getAllBooks,
   getAllPublicBooks,
   updateBook,
@@ -51,7 +52,7 @@ export const insertNewBook = async (req, res, next) => {
   }
 };
 
-//!update new book
+//!update book
 export const updateBookController = async (req, res, next) => {
   try {
     const { fName, _id } = req.userInfo;
@@ -76,6 +77,28 @@ export const updateBookController = async (req, res, next) => {
           res,
           message: " Unable to update book,try again later",
           statusCode: 401,
+        });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//!delete book
+export const deleteBookController = async (req, res, next) => {
+  try {
+    const { _id } = req.params;
+    const book = await deleteBook(_id);
+    book?._id
+      ? responseClient({
+          req,
+          res,
+          message: "Book Has been deleted successfully",
+        })
+      : responseClient({
+          req,
+          res,
+          message: " Unable to delete book,try again later",
+          statusCode: 404,
         });
   } catch (error) {
     next(error);

@@ -102,3 +102,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 }
 
 
+###delete books for public
+DELETE {{rootUrl}}/api/v1/books/6a48cd5e31d000fbda56620f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODMyNDM5OTUsImV4cCI6MTc4MzI0NDg5NX0.sn6b1cteir9Dsxsz7uAuyqwj8R80QTs6I3Inelm_X_E
