@@ -4,6 +4,7 @@ import {
   getAllBooks,
   getAllPublicBooks,
 } from "../models/Book/BookModel.js";
+import slugify from "slugify";
 
 //!insert new book
 export const insertNewBook = async (req, res, next) => {
@@ -12,6 +13,7 @@ export const insertNewBook = async (req, res, next) => {
     console.log(req.userInfo);
     const obj = {
       ...req.body,
+      slug: slugify(req.body.title, { lower: true }),
 
       addedBy: {
         name: fName,
@@ -36,6 +38,14 @@ export const insertNewBook = async (req, res, next) => {
           statusCode: 401,
         });
   } catch (error) {
+    if (error.message.includes("E11000 duplicate key")) {
+      return responseClient({
+        req,
+        res,
+        message: " Duplicate Data detected: " + JSON.stringify(error.keyValue),
+        statusCode: 400,
+      });
+    }
     next(error);
   }
 };
