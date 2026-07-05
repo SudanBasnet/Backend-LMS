@@ -40,6 +40,14 @@ export const YEAR = Joi.number()
   .max(new Date().getFullYear());
 export const YEAR_REQ = YEAR.required();
 
+export const _ID = Joi.string();
+export const _ID_REQ = _ID.required();
+
+export const STATUS = Joi.string().valid("active", "inactive");
+export const STATUS_REQ = STATUS.required();
+
+export const EXPECTEDAVAILABLE = Joi.date().allow(null, "");
+export const EXPECTEDAVAILABLE_REQ = EXPECTEDAVAILABLE.required();
 // export const ISBN = Joi.number().integer().min(1000000000).max(99999999999999);
 export const ISBN = Joi.string()
   .pattern(/^\d{10}$|^\d{13}$/)

@@ -3,6 +3,7 @@ import {
   createNewBook,
   getAllBooks,
   getAllPublicBooks,
+  updateBook,
 } from "../models/Book/BookModel.js";
 import slugify from "slugify";
 
@@ -46,6 +47,37 @@ export const insertNewBook = async (req, res, next) => {
         statusCode: 400,
       });
     }
+    next(error);
+  }
+};
+
+//!update new book
+export const updateBookController = async (req, res, next) => {
+  try {
+    const { fName, _id } = req.userInfo;
+    console.log(req.userInfo);
+    const obj = {
+      ...req.body,
+
+      lastupdatedby: {
+        name: fName,
+        adminId: _id,
+      },
+    };
+    const book = await updateBook(obj);
+    book._id
+      ? responseClient({
+          req,
+          res,
+          message: "Book Has been updated successfully",
+        })
+      : responseClient({
+          req,
+          res,
+          message: " Unable to update book,try again later",
+          statusCode: 401,
+        });
+  } catch (error) {
     next(error);
   }
 };

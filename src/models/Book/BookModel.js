@@ -14,3 +14,8 @@ export const getAllPublicBooks = () => {
 export const getAllBooks = () => {
   return bookSchema.find();
 };
+
+//!update new book
+export const updateBook = ({ _id, ...rest }) => {
+  return bookSchema.findByIdAndUpdate(_id, rest);
+};
