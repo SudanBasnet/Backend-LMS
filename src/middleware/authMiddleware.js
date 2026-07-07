@@ -10,15 +10,13 @@ import { responseClient } from "./responseClient.js";
 //!user profile authentication middleware
 export const userAuthMiddleware = async (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(authorization);
+
   let message = "Unauthorized";
   if (authorization) {
     const token = authorization.split(" ")[1];
 
-    console.log(token);
     //check if  valid
     const decoded = verifyAccessJWT(token);
-    console.log(decoded);
 
     //check if exist in session table
     if (decoded.email) {

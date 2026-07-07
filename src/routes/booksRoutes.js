@@ -14,7 +14,9 @@ import {
   newBookDataValidation,
   updateBookDataValidation,
 } from "../middleware/Validation/bookDataValidation.js";
+import { upload } from "../utils/multer.js";
 const router = express.Router();
+
 //!public get request
 router.get("/", getAllPublicBooksController);
 //!admin get request
@@ -29,6 +31,8 @@ router.post(
   "/",
   userAuthMiddleware,
   adminAuthMiddleware,
+  upload.single("image"),
+  // upload.array("image", 2),
   newBookDataValidation,
   insertNewBook,
 );
