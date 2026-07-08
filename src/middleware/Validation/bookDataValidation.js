@@ -25,6 +25,8 @@ export const newBookDataValidation = (req, res, next) => {
 
 //!updated book validation
 export const updateBookDataValidation = (req, res, next) => {
+  req.body.expectedAvailable =
+    req.body.expectedAvailable === "null" ? null : req.body.expectedAvailable;
   const obj = {
     status: STATUS_REQ,
     _id: _ID_REQ,

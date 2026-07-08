@@ -22,7 +22,7 @@ export const getAllBooks = () => {
 
 //!update new book
 export const updateBook = ({ _id, ...rest }) => {
-  return bookSchema.findByIdAndUpdate(_id, rest);
+  return bookSchema.findByIdAndUpdate(_id, rest, { new: true });
 };
 
 //!delete book

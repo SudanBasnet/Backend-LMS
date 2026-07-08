@@ -42,6 +42,7 @@ router.put(
   "/",
   userAuthMiddleware,
   adminAuthMiddleware,
+  upload.array("images"),
   updateBookDataValidation,
   updateBookController,
 );

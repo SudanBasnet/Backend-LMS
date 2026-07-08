@@ -7,7 +7,6 @@ export const validateData = ({ req, res, next, obj }) => {
   //* pass the data, req.body to Schema
 
   const { error } = schema.validate(req.body);
-
   if (error) {
     if (req.file || Array.isArray(req.files)) {
       //proceed for deleting the uploaded file

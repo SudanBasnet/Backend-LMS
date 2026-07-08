@@ -31,8 +31,7 @@ export const insertNewBook = async (req, res, next) => {
 
     if (duplicateBook) {
       deleteUploadedFiles(req);
-      const duplicateField =
-        duplicateBook.slug === slug ? "title" : "isbn";
+      const duplicateField = duplicateBook.slug === slug ? "title" : "isbn";
 
       return responseClient({
         req,
@@ -91,7 +90,11 @@ export const insertNewBook = async (req, res, next) => {
 export const updateBookController = async (req, res, next) => {
   try {
     const { fName, _id } = req.userInfo;
-    console.log(req.userInfo);
+    let imageList = [];
+    if (Array.isArray(req.files)) {
+      imageList = [req.body.imgUrl, ...req.files.map((obj) => obj.path)];
+    }
+
     const obj = {
       ...req.body,
 
@@ -99,13 +102,16 @@ export const updateBookController = async (req, res, next) => {
         name: fName,
         adminId: _id,
       },
+      imageList,
     };
     const book = await updateBook(obj);
+    console.log(book);
     book._id
       ? responseClient({
           req,
           res,
           message: "Book Has been updated successfully",
+          payload: book,
         })
       : responseClient({
           req,
