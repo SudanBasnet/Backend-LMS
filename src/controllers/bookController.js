@@ -2,23 +2,52 @@ import { responseClient } from "../middleware/responseClient.js";
 import {
   createNewBook,
   deleteBook,
+  findOneBook,
   getAllBooks,
   getAllPublicBooks,
   updateBook,
 } from "../models/Book/BookModel.js";
+import { deleteUploadedFiles } from "../middleware/Validation/fileUtil.js";
 import slugify from "slugify";
 
 //!insert new book
 export const insertNewBook = async (req, res, next) => {
-  console.log(req.file);
-
   try {
+    if (!req.file) {
+      return responseClient({
+        req,
+        res,
+        message: "Book image is required",
+        statusCode: 400,
+      });
+    }
+
     const { fName, _id } = req.userInfo;
     const { path } = req.file;
+    const slug = slugify(req.body.title, { lower: true });
+    const duplicateBook = await findOneBook({
+      $or: [{ slug }, { isbn: req.body.isbn }],
+    });
+
+    if (duplicateBook) {
+      deleteUploadedFiles(req);
+      const duplicateField =
+        duplicateBook.slug === slug ? "title" : "isbn";
+
+      return responseClient({
+        req,
+        res,
+        message:
+          duplicateField === "title"
+            ? "Book title already exists"
+            : "Book ISBN already exists",
+        statusCode: 400,
+      });
+    }
 
     const obj = {
       ...req.body,
-      slug: slugify(req.body.title, { lower: true }),
+      slug,
 
       addedBy: {
         name: fName,
@@ -44,6 +73,8 @@ export const insertNewBook = async (req, res, next) => {
           statusCode: 401,
         });
   } catch (error) {
+    deleteUploadedFiles(req);
+
     if (error.message.includes("E11000 duplicate key")) {
       return responseClient({
         req,

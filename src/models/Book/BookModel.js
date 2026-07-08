@@ -5,6 +5,11 @@ export const createNewBook = (bookObj) => {
   return bookSchema(bookObj).save();
 };
 
+//!find one book
+export const findOneBook = (filter) => {
+  return bookSchema.findOne(filter);
+};
+
 //!get allbook
 export const getAllPublicBooks = () => {
   return bookSchema.find({ status: "active" });

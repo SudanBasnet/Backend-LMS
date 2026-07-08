@@ -30,6 +30,8 @@ const bookSchema = new mongoose.Schema(
     },
     isbn: {
       type: Number,
+      unique: true,
+      index: 1,
       required: true,
     },
     genre: {
