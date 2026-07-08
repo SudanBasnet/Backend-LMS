@@ -2,7 +2,7 @@ import { unlink } from "fs";
 import { resolve } from "path";
 
 //actually delete the files
-const deleteFile = (filePath) => {
+export const deleteFile = (filePath) => {
   try {
     const resolvedPath = resolve(filePath);
     console.log(filePath, "uploaded file will be deleted in 2 seconds");

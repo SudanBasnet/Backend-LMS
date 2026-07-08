@@ -26,7 +26,7 @@ export const userAuthMiddleware = async (req, res, next) => {
       //get user by email
       if (tokenSession?._id) {
         const user = await getUserByEmail(decoded.email);
-        console.log(user);
+        console.log("authenticated user:", user?.email);
         if (user?._id && user.status === "active") {
           //return the user
           req.userInfo = user;

@@ -7,7 +7,10 @@ import {
   getAllPublicBooks,
   updateBook,
 } from "../models/Book/BookModel.js";
-import { deleteUploadedFiles } from "../middleware/Validation/fileUtil.js";
+import {
+  deleteFile,
+  deleteUploadedFiles,
+} from "../middleware/Validation/fileUtil.js";
 import slugify from "slugify";
 
 //!insert new book
@@ -91,9 +94,37 @@ export const updateBookController = async (req, res, next) => {
   try {
     const { fName, _id } = req.userInfo;
     let imageList = [];
-    if (Array.isArray(req.files)) {
-      imageList = [req.body.imgUrl, ...req.files.map((obj) => obj.path)];
+    let imgToDelete = [];
+
+    try {
+      imageList = JSON.parse(req.body.imageList || "[]");
+    } catch {
+      imageList = [];
     }
+
+    try {
+      imgToDelete = JSON.parse(req.body.imgToDelete || "[]");
+    } catch {
+      imgToDelete = [];
+    }
+
+    if (imgToDelete.length) {
+      imageList = imageList.filter((img) => !imgToDelete.includes(img));
+      imgToDelete.map((img) => deleteFile(img));
+      if (imgToDelete.includes(req.body.imgUrl)) {
+        req.body.imgUrl = imageList[0] || "";
+      }
+    }
+
+    if (Array.isArray(req.files) && req.files.length) {
+      req.body.imageList = [
+        ...imageList,
+        ...req.files.map((obj) => obj.path),
+      ].filter((img, index, images) => img && images.indexOf(img) === index);
+    } else {
+      req.body.imageList = imageList;
+    }
+    delete req.body.imgToDelete;
 
     const obj = {
       ...req.body,
@@ -102,7 +133,6 @@ export const updateBookController = async (req, res, next) => {
         name: fName,
         adminId: _id,
       },
-      imageList,
     };
     const book = await updateBook(obj);
     console.log(book);
@@ -129,18 +159,25 @@ export const deleteBookController = async (req, res, next) => {
   try {
     const { _id } = req.params;
     const book = await deleteBook(_id);
-    book?._id
-      ? responseClient({
-          req,
-          res,
-          message: "Book Has been deleted successfully",
-        })
-      : responseClient({
-          req,
-          res,
-          message: " Unable to delete book,try again later",
-          statusCode: 404,
-        });
+
+    if (book?._id) {
+      [book.imgUrl, ...(Array.isArray(book.imageList) ? book.imageList : [])]
+        .filter((img, index, images) => img && images.indexOf(img) === index)
+        .map((img) => deleteFile(img));
+
+      return responseClient({
+        req,
+        res,
+        message: "Book Has been deleted successfully",
+      });
+    }
+
+    responseClient({
+      req,
+      res,
+      message: " Unable to delete book,try again later",
+      statusCode: 404,
+    });
   } catch (error) {
     next(error);
   }

@@ -2,6 +2,7 @@ import {
   _ID_REQ,
   EXPECTEDAVAILABLE,
   ISBN_REQ,
+  JSON_ARRAY_STR,
   LONG_STR_REQ,
   SHORT_STR_REQ,
   STATUS_REQ,
@@ -27,6 +28,7 @@ export const newBookDataValidation = (req, res, next) => {
 export const updateBookDataValidation = (req, res, next) => {
   req.body.expectedAvailable =
     req.body.expectedAvailable === "null" ? null : req.body.expectedAvailable;
+  console.log(req.body);
   const obj = {
     status: STATUS_REQ,
     _id: _ID_REQ,
@@ -34,6 +36,8 @@ export const updateBookDataValidation = (req, res, next) => {
     year: YEAR_REQ,
     author: SHORT_STR_REQ,
     imgUrl: LONG_STR_REQ,
+    imageList: JSON_ARRAY_STR.allow(""),
+    imgToDelete: JSON_ARRAY_STR.allow(""),
 
     genre: SHORT_STR_REQ,
     description: LONG_STR_REQ,
