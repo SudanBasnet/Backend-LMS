@@ -26,8 +26,8 @@ POST {{rootUrl}}/api/v1/auth/activate-user
 Content-Type: application/json
 
 {
-  "sessionId": "juhgjhjkghuujghku",
-  "t": "de4bc1ec-b10e-45a0-b7bb-60e5c2bab4e7"
+  "sessionId": "6a44db91ef479962490af5cb",
+  "t": "815588b7-7427-400e-9f16-a1e51588565c"
 
 }
 
@@ -64,3 +64,44 @@ Content-Type: application/json
   "email":"sdnbasnet@gmail.com"
 }
 
+###reset password request
+POST {{rootUrl}}/api/v1/auth/reset-password
+Content-Type: application/json
+
+{
+  "email":"sdnbasnet@gmail.com",
+  "password":"aaAA@@1111",
+  "otp":9167
+}
+
+
+#### BookAPI
+
+###GET books for public
+GET {{rootUrl}}/api/v1/books
+
+###GET books for admin
+GET {{rootUrl}}/api/v1/books/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODMxNzM2ODAsImV4cCI6MTc4MzE3NDU4MH0.A0CRYhIrLbTIjvKSGfjnOlmVkXH99bd3ktjhz_Q8rgI
+
+###post books
+POST {{rootUrl}}/api/v1/books
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODMxNTgyNzAsImV4cCI6MTc4MzE1OTE3MH0.sN_o6UIY_cyXRsYwO71-ShpbQxYR1rqcmWad0PFKozU
+
+{
+
+  "title": "Atomic Habits",
+  "year": "2018",
+  "author": "James Clear",
+  "imgUrl": "https://example.com/images/atomic-habits.jpg",
+  "isbn": "978073521129",
+  "genre": "Self-help"
+
+
+}
+
+
+###delete books for public
+DELETE {{rootUrl}}/api/v1/books/6a48cd5e31d000fbda56620f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODMyNDM5OTUsImV4cCI6MTc4MzI0NDg5NX0.sn6b1cteir9Dsxsz7uAuyqwj8R80QTs6I3Inelm_X_E

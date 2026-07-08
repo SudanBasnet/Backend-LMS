@@ -5,6 +5,7 @@ import { responseClient } from "./src/middleware/responseClient.js";
 import { errorHandler } from "./src/middleware/errorHandler.js";
 import authRoute from "./src/routes/authRoutes.js";
 import userRoute from "./src/routes/userRoutes.js";
+import booksRoute from "./src/routes/booksRoutes.js";
 const app = express();
 dotenv.config();
 
@@ -16,11 +17,14 @@ import morgan from "morgan";
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 //!api endpoints
 
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/books", booksRoute);
 
 //!server status
 app.get("/", (req, res) => {

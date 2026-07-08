@@ -10,15 +10,13 @@ import { responseClient } from "./responseClient.js";
 //!user profile authentication middleware
 export const userAuthMiddleware = async (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(authorization);
+
   let message = "Unauthorized";
   if (authorization) {
     const token = authorization.split(" ")[1];
 
-    console.log(token);
     //check if  valid
     const decoded = verifyAccessJWT(token);
-    console.log(decoded);
 
     //check if exist in session table
     if (decoded.email) {
@@ -28,7 +26,7 @@ export const userAuthMiddleware = async (req, res, next) => {
       //get user by email
       if (tokenSession?._id) {
         const user = await getUserByEmail(decoded.email);
-        console.log(user);
+        console.log("authenticated user:", user?.email);
         if (user?._id && user.status === "active") {
           //return the user
           req.userInfo = user;
@@ -84,4 +82,20 @@ export const renewAccessJWTMiddleware = async (req, res, next) => {
     message,
     statusCode: 401,
   });
+};
+
+//! check user role admin
+export const adminAuthMiddleware = (req, res, next) => {
+  try {
+    req.userInfo.role === "admin"
+      ? next()
+      : responseClient({
+          req,
+          res,
+          message: " you do not have access to this resources",
+          statusCode: 403,
+        });
+  } catch (error) {
+    next(error);
+  }
 };
