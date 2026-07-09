@@ -5,6 +5,16 @@ export const createNewBook = (bookObj) => {
   return bookSchema(bookObj).save();
 };
 
+//!inserting many book
+export const createManyBook = (bookArray) => {
+  return bookSchema.insertMany(bookArray);
+};
+
+//!deleting many book
+export const emptyBooks = () => {
+  return bookSchema.deleteMany({});
+};
+
 //!find one book
 export const findOneBook = (filter) => {
   return bookSchema.findOne(filter);
