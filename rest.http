@@ -79,6 +79,8 @@ Content-Type: application/json
 
 ###GET books for public
 GET {{rootUrl}}/api/v1/books
+###GET books for public
+GET {{rootUrl}}/api/v1/books/public/clean-code
 
 ###GET books for admin
 GET {{rootUrl}}/api/v1/books/admin

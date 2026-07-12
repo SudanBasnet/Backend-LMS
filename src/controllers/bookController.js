@@ -197,6 +197,21 @@ export const getAllPublicBooksController = async (req, res, next) => {
     next(error);
   }
 };
+//! get single book for public
+export const getSinglePublicBooksController = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    const payload = await findOneBook({ slug, status: "active" });
+    responseClient({
+      req,
+      res,
+      payload,
+      message: "Book Has been fetched successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 //! get all books for public
 export const getAllBooksController = async (req, res, next) => {
