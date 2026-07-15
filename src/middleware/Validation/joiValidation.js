@@ -3,7 +3,9 @@ import { responseClient } from "../responseClient.js";
 import { deleteUploadedFiles } from "./fileUtil.js";
 
 export const validateData = ({ req, res, next, obj }) => {
-  const schema = Joi.object(obj);
+  const schema = Array.isArray(req.body)
+    ? Joi.array().items(obj).min(1).required()
+    : Joi.object(obj);
   //* pass the data, req.body to Schema
 
   const { error } = schema.validate(req.body);

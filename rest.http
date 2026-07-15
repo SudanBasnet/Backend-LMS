@@ -113,12 +113,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 
 POST {{rootUrl}}/api/v1/borrows/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQxMDM4MzYsImV4cCI6MTc4NDEwNDczNn0.7B7BI03E6VaqHUHnk_c3OLE4Y4xs2tjq7jnzLs_G7Cw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQxMDkzMTIsImV4cCI6MTc4NDExMDIxMn0.5G4SR19Gsu2VyrsAX5VRzpJGwtqvWw4sGaKccUC5aMk
 
-{
-  "bookId": "6a4f4685eb6dbcfc12bc9df7",
-  "thumbnail": "public/img/1783861717296-928719693-clean code 1.jpg",
-  "bookTitle": "Clean Code"
-}
+  [
+    {
+      "bookId": "6a4f4685eb6dbcfc12bc9df7",
+      "thumbnail": "public/img/1783861717296-928719693-clean code 1.jpg",
+      "bookTitle": "Clean Code"}
+
+  ]
 
 

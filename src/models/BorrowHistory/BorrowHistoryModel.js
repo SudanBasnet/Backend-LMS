@@ -1,8 +1,8 @@
 import BorrowSchema from "./BorrowHistorySchema.js";
 
 //!inserting new Borrow
-export const createNewBorrow = (BorrowObj) => {
-  return BorrowSchema(BorrowObj).save();
+export const createBorrows = (BorrowArg) => {
+  return BorrowSchema.insertMany(BorrowArg);
 };
 // //!update Borrow
 // export const updateBorrow = (filter, update) => {

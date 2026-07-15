@@ -7,6 +7,7 @@ const borrowSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
     bookId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Book",
@@ -20,6 +21,11 @@ const borrowSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    reviewId: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
+      ref: "Review",
+    },
     isReturned: {
       type: Boolean,
       default: false,
@@ -31,11 +37,6 @@ const borrowSchema = new mongoose.Schema(
     dueDate: {
       type: Date,
       required: null,
-    },
-    reviewId: {
-      type: mongoose.Schema.Types.ObjectId,
-      default: null,
-      ref: "Review",
     },
   },
   { timestamps: true },
