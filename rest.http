@@ -84,7 +84,7 @@ GET {{rootUrl}}/api/v1/books/public/clean-code
 
 ###GET books for admin
 GET {{rootUrl}}/api/v1/books/admin
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODMxNzM2ODAsImV4cCI6MTc4MzE3NDU4MH0.A0CRYhIrLbTIjvKSGfjnOlmVkXH99bd3ktjhz_Q8rgI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQxMDI4NTUsImV4cCI6MTc4NDEwMzc1NX0.6bh9HgDEcm8kodSi4Bd7Svd4t0Az4ous4EbQ858Dr4c
 
 ###post books
 POST {{rootUrl}}/api/v1/books
@@ -107,3 +107,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 ###delete books for public
 DELETE {{rootUrl}}/api/v1/books/6a48cd5e31d000fbda56620f
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODMyNDM5OTUsImV4cCI6MTc4MzI0NDg5NX0.sn6b1cteir9Dsxsz7uAuyqwj8R80QTs6I3Inelm_X_E
+
+
+###post borrow books
+
+POST {{rootUrl}}/api/v1/borrows/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQxMDM4MzYsImV4cCI6MTc4NDEwNDczNn0.7B7BI03E6VaqHUHnk_c3OLE4Y4xs2tjq7jnzLs_G7Cw
+
+{
+  "bookId": "6a4f4685eb6dbcfc12bc9df7",
+  "thumbnail": "public/img/1783861717296-928719693-clean code 1.jpg",
+  "bookTitle": "Clean Code"
+}
+
+
