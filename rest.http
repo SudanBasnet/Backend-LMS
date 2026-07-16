@@ -113,7 +113,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 
 POST {{rootUrl}}/api/v1/borrows/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQxMDkzMTIsImV4cCI6MTc4NDExMDIxMn0.5G4SR19Gsu2VyrsAX5VRzpJGwtqvWw4sGaKccUC5aMk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQxMTEzNzYsImV4cCI6MTc4NDExMjI3Nn0.kvX9yKV95skkGnXf2C_ghaDQLT4uhXbOctemOSfD2Ao
 
   [
     {
