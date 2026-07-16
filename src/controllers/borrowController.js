@@ -1,4 +1,5 @@
 import { responseClient } from "../middleware/responseClient.js";
+import { updateBook } from "../models/Book/BookModel.js";
 
 import {
   createBorrows,
@@ -9,18 +10,30 @@ const BOOK_DUE_DAYS = 15;
 export const insertNewBorrow = async (req, res, next) => {
   try {
     const { _id } = req.userInfo;
-    let today = new Date();
-    const dueDate = today.setDate(today.getDate() + BOOK_DUE_DAYS);
+    const dueDate = new Date();
+    dueDate.setDate(dueDate.getDate() + BOOK_DUE_DAYS);
 
     req.body = req.body.map((book) => {
       return {
         ...book,
         userId: _id,
         dueDate,
+        expectedAvailable: dueDate,
       };
     });
     console.log(req.body);
     const borrow = await createBorrows(req.body);
+    if (borrow.length) {
+      await Promise.all(
+        borrow.map(({ bookId }) =>
+          updateBook({
+            _id: bookId,
+            available: false,
+            expectedAvailable: dueDate,
+          }),
+        ),
+      );
+    }
 
     return borrow.length
       ? responseClient({
@@ -44,8 +57,9 @@ export const insertNewBorrow = async (req, res, next) => {
 export const getBorrowsController = async (req, res, next) => {
   try {
     const { _id, role } = req.userInfo;
+    const path = req.path;
 
-    const isAdmin = role === "admin";
+    const isAdmin = path === "/admin";
 
     const borrow = isAdmin
       ? await getBorrowsRBAC() //all borrows for admin
