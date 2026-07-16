@@ -6,6 +6,7 @@ import { errorHandler } from "./src/middleware/errorHandler.js";
 import authRoute from "./src/routes/authRoutes.js";
 import userRoute from "./src/routes/userRoutes.js";
 import booksRoute from "./src/routes/booksRoutes.js";
+import borrowsRoute from "./src/routes/borrowRoutes.js";
 const app = express();
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.static("public"));
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/books", booksRoute);
+app.use("/api/v1/borrows", borrowsRoute);
 
 //!server status
 app.get("/", (req, res) => {
