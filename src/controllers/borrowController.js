@@ -1,6 +1,9 @@
 import { responseClient } from "../middleware/responseClient.js";
 
-import { createBorrows } from "../models/BorrowHistory/BorrowHistoryModel.js";
+import {
+  createBorrows,
+  getBorrowsRBAC,
+} from "../models/BorrowHistory/BorrowHistoryModel.js";
 const BOOK_DUE_DAYS = 15;
 //!insert new Borrow
 export const insertNewBorrow = async (req, res, next) => {
@@ -24,7 +27,7 @@ export const insertNewBorrow = async (req, res, next) => {
           req,
           res,
           message: "borrowing book has been done successfully",
-          borrow,
+          payload: borrow,
         })
       : responseClient({
           req,
@@ -32,6 +35,28 @@ export const insertNewBorrow = async (req, res, next) => {
           message: " Unable to insert Borrow book,try again later",
           statusCode: 401,
         });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//!get Borrows for public and admin based on role
+export const getBorrowsController = async (req, res, next) => {
+  try {
+    const { _id, role } = req.userInfo;
+
+    const isAdmin = role === "admin";
+
+    const borrow = isAdmin
+      ? await getBorrowsRBAC() //all borrows for admin
+      : await getBorrowsRBAC({ userId: _id }); //user specific
+
+    return responseClient({
+      req,
+      res,
+      message: "Here is all of borrow list",
+      payload: borrow,
+    });
   } catch (error) {
     next(error);
   }
