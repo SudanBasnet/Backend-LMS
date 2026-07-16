@@ -9,3 +9,7 @@ export const createBorrows = (BorrowArg) => {
 export const getBorrowsRBAC = (filter) => {
   return BorrowSchema.find(filter);
 };
+//!update borrow for return
+export const updateBorrow = (filter, update) => {
+  return BorrowSchema.findOneAndUpdate(filter, update, { new: true });
+};

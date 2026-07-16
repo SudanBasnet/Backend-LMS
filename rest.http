@@ -124,3 +124,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
   ]
 
 
+###return borrow books
+
+PATCH {{rootUrl}}/api/v1/borrows
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQxOTgyMzEsImV4cCI6MTc4NDE5OTEzMX0.5qo3flhgxS8oboPyCD0hLhTPu2Mpwls-5at6hJLuBeg
+
+{
+  "_id": "6a58b603975fc222b62f5dc8"
+}
+
+
+

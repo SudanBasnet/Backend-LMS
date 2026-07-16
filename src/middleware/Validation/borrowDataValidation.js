@@ -21,6 +21,14 @@ export const newBorrowDataValidation = (req, res, next) => {
   validateData({ req, res, next, obj });
 };
 
+//! Return book validation
+export const returnBookDataValidation = (req, res, next) => {
+  const obj = {
+    _id: _ID_REQ,
+  };
+  validateData({ req, res, next, obj });
+};
+
 // //!updated book validation
 // export const updateBookDataValidation = (req, res, next) => {
 //   req.body.expectedAvailable =

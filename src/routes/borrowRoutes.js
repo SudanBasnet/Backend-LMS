@@ -8,8 +8,12 @@ import {
 import {
   getBorrowsController,
   insertNewBorrow,
+  returnBookController,
 } from "../controllers/borrowController.js";
-import { newBorrowDataValidation } from "../middleware/Validation/borrowDataValidation.js";
+import {
+  newBorrowDataValidation,
+  returnBookDataValidation,
+} from "../middleware/Validation/borrowDataValidation.js";
 
 const router = express.Router();
 //!insert new borrow
@@ -23,6 +27,14 @@ router.get(
   userAuthMiddleware,
   adminAuthMiddleware,
   getBorrowsController,
+);
+
+//* return book to the library
+router.patch(
+  "/",
+  userAuthMiddleware,
+  returnBookDataValidation,
+  returnBookController,
 );
 
 export default router;

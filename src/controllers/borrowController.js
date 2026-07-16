@@ -4,6 +4,7 @@ import { updateBook } from "../models/Book/BookModel.js";
 import {
   createBorrows,
   getBorrowsRBAC,
+  updateBorrow,
 } from "../models/BorrowHistory/BorrowHistoryModel.js";
 const BOOK_DUE_DAYS = 15;
 //!insert new Borrow
@@ -70,6 +71,58 @@ export const getBorrowsController = async (req, res, next) => {
       res,
       message: "Here is all of borrow list",
       payload: borrow,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//!return a borrowed book
+export const returnBookController = async (req, res, next) => {
+  try {
+    const { _id: userId } = req.userInfo;
+
+    const filter = {
+      _id: req.body._id,
+      userId,
+      isReturned: false,
+    };
+    const update = {
+      isReturned: true,
+      returnedDate: new Date(),
+    };
+
+    const returnedBorrow = await updateBorrow(filter, update);
+
+    if (!returnedBorrow?._id) {
+      return responseClient({
+        req,
+        res,
+        message: "Borrow record not found or the book has already been returned",
+        statusCode: 404,
+      });
+    }
+
+    const updatedBook = await updateBook({
+      _id: returnedBorrow.bookId,
+      available: true,
+      expectedAvailable: null,
+    });
+
+    if (!updatedBook?._id) {
+      return responseClient({
+        req,
+        res,
+        message: "Borrow was updated, but the linked book could not be updated",
+        statusCode: 500,
+      });
+    }
+
+    return responseClient({
+      req,
+      res,
+      message: "Your book has been returned successfully",
+      payload: returnedBorrow,
     });
   } catch (error) {
     next(error);
