@@ -1,36 +1,59 @@
 import { responseClient } from "../middleware/responseClient.js";
-import { createReviews } from "../models/Review/ReviewModel.js";
+
+import { createReviews, getReviews } from "../models/Review/ReviewModel.js";
 
 const BOOK_DUE_DAYS = 15;
 //!insert new Borrow
 export const insertNewReviewController = async (req, res, next) => {
   try {
     const { _id, fName, lName } = req.userInfo;
+    const { borrowId } = req.body;
     const reviewObj = {
       userId: _id,
       userName: `${fName} ${lName}`,
       ...req.body,
-      // bookId,
-      // title,
-      // reviewMessage,
-      // rating,
-      // borrowId,
     };
 
     const result = await createReviews(reviewObj);
-
-    return result._id
-      ? responseClient({
+    if (result?._id) {
+      //update borrow table with review id result._id
+      const reviewId = result._id;
+      const updateResult = await updateBorrow({ _id: borrowId }, { reviewId });
+      if (updateResult?._id) {
+        return responseClient({
           req,
           res,
-          message: "Review has been recieved successfully",
-        })
-      : responseClient({
-          req,
-          res,
-          message: " Unable to receive review,try again later",
-          statusCode: 401,
+          message: "Review has been received successfully",
         });
+      }
+    }
+    responseClient({
+      req,
+      res,
+      message: " Something went wrong, Please contact administrator",
+      statusCode: 401,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//!get all reviews controller
+
+export const getAllreviewsController = async (req, res, next) => {
+  try {
+    const filter = {};
+
+    if (req?.userInfo?.role !== "admin") {
+      filter.isApproved = true;
+    }
+    const payload = await getReviews(filter);
+    responseClient({
+      req,
+      res,
+      payload,
+      message: "Here are the reviews",
+    });
   } catch (error) {
     next(error);
   }

@@ -44,6 +44,18 @@ Content-Type: application/json
   
 }
 
+###Login User
+
+POST {{rootUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+
+  "email": "sdnbasnet5@gmail.com",
+  "password": "Shreey@nsh123"
+  
+}
+
 
 
 ###get User
@@ -149,5 +161,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
   "borrowId":"6a58aafbf24eec75c3716f88"
 }
 
+###get all reviews
+
+GET {{rootUrl}}/api/v1/reviews
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQyODc1NjgsImV4cCI6MTc4NDI4ODQ2OH0.3XWNbQ3bD3qmTruehV3EUG_LIr96-NuBlDTpgz84asQ
 
 
