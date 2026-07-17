@@ -167,3 +167,14 @@ GET {{rootUrl}}/api/v1/reviews/admin
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQyOTEwMTIsImV4cCI6MTc4NDI5MTkxMn0.fP_7Zedpsst_qcrym-rAaRVAQaYMN_o5oPtsTKooFGg
 
+
+###update reviews
+PATCH {{rootUrl}}/api/v1/reviews/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldDVAZ21haWwuY29tIiwiaWF0IjoxNzg0Mjk1NjkyLCJleHAiOjE3ODQyOTY1OTJ9.G0hBgyt0ueBkP_mxFXls1Zn8uDTtSpmrTwUSZW_sdhs
+
+{
+  "_id":"6a59c4ec79b45db2035795b6",
+  "isApproved":true
+}
+

@@ -1,7 +1,11 @@
 import { responseClient } from "../middleware/responseClient.js";
 import { updateBorrow } from "../models/BorrowHistory/BorrowHistoryModel.js";
 
-import { createReviews, getReviews } from "../models/Review/ReviewModel.js";
+import {
+  createReviews,
+  getReviews,
+  updateReview,
+} from "../models/Review/ReviewModel.js";
 
 const BOOK_DUE_DAYS = 15;
 //!insert new Borrow
@@ -55,6 +59,47 @@ export const getAllreviewsController = async (req, res, next) => {
       payload,
       message: "Here are the reviews",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//!update review status
+
+export const updateReviewStatusController = async (req, res, next) => {
+  try {
+    const { _id, isApproved } = req.body;
+
+    if (!_id || typeof isApproved !== "boolean") {
+      return responseClient({
+        req,
+        res,
+        statusCode: 400,
+        message: "Review ID and approval status are required",
+      });
+    }
+
+    const result = await updateReview(
+      _id,
+      { isApproved },
+      { new: true, runValidators: true },
+    );
+
+    return result?._id
+      ? responseClient({
+          req,
+          res,
+          payload: result,
+          message: isApproved
+            ? "The review has been approved"
+            : "The review has been unapproved",
+        })
+      : responseClient({
+          req,
+          res,
+          statusCode: 404,
+          message: "Review not found",
+        });
   } catch (error) {
     next(error);
   }

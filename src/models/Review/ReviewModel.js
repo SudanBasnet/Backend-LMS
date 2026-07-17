@@ -12,8 +12,8 @@ export const getReviews = (filter) => {
     .sort({ updatedAt: -1 });
 };
 //!update Review
-export const updateReview = (filter, obj) => {
-  return ReviewSchema.findOneAndUpdate(filter, obj, { new: true });
+export const updateReview = (_id, ...rest) => {
+  return ReviewSchema.findByIdAndUpdate(_id, ...rest);
 };
 //!delete Review for return
 export const deleteReview = (filter) => {
