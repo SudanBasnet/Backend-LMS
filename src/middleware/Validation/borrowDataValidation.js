@@ -28,25 +28,3 @@ export const returnBookDataValidation = (req, res, next) => {
   };
   validateData({ req, res, next, obj });
 };
-
-// //!updated book validation
-// export const updateBookDataValidation = (req, res, next) => {
-//   req.body.expectedAvailable =
-//     req.body.expectedAvailable === "null" ? null : req.body.expectedAvailable;
-//   console.log(req.body);
-//   const obj = {
-//     status: STATUS_REQ,
-//     _id: _ID_REQ,
-//     title: SHORT_STR_REQ,
-//     year: YEAR_REQ,
-//     author: SHORT_STR_REQ,
-//     imgUrl: LONG_STR_REQ,
-//     imageList: JSON_ARRAY_STR.allow(""),
-//     imgToDelete: JSON_ARRAY_STR.allow(""),
-
-//     genre: SHORT_STR_REQ,
-//     description: LONG_STR_REQ,
-//     expectedAvailable: EXPECTEDAVAILABLE,
-//   };
-//   validateData({ req, res, next, obj });
-// };

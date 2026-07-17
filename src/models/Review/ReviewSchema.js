@@ -13,7 +13,7 @@ const reviewSchema = new mongoose.Schema(
       ref: "Book",
       required: true,
     },
-    Title: {
+    title: {
       type: String,
       required: true,
     },

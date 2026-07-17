@@ -135,4 +135,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 }
 
 
+###review books
+
+POST {{rootUrl}}/api/v1/reviews
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQyNjc5MjAsImV4cCI6MTc4NDI2ODgyMH0.3qlNyBiWvnCkAXuhKrpfcrIE5r-jhflbrar4JQpKgO0
+
+{
+  "bookId": "6a58b603975fc222b62f5dc8",
+  "title":"test",
+  "reviewMessage":"test",
+  "rating":"5",
+  "borrowId":"6a58aafbf24eec75c3716f88"
+}
+
+
 
