@@ -7,7 +7,9 @@ export const createReviews = (reviewobj) => {
 
 // //!get Review based on role
 export const getReviews = (filter) => {
-  return ReviewSchema.find(filter).sort({ updatedAt: 1 });
+  return ReviewSchema.find(filter)
+    .populate({ path: "bookId", select: "title imgUrl slug" })
+    .sort({ updatedAt: -1 });
 };
 //!update Review
 export const updateReview = (filter, obj) => {

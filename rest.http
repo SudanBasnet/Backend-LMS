@@ -154,7 +154,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQyNjc5MjAsImV4cCI6MTc4NDI2ODgyMH0.3qlNyBiWvnCkAXuhKrpfcrIE5r-jhflbrar4JQpKgO0
 
 {
-  "bookId": "6a58b603975fc222b62f5dc8",
+  "bookId": "6a4f4685eb6dbcfc12bc9df7",
   "title":"test",
   "reviewMessage":"test",
   "rating":"5",
@@ -163,8 +163,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 
 ###get all reviews
 
-GET {{rootUrl}}/api/v1/reviews
+GET {{rootUrl}}/api/v1/reviews/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQyODc1NjgsImV4cCI6MTc4NDI4ODQ2OH0.3XWNbQ3bD3qmTruehV3EUG_LIr96-NuBlDTpgz84asQ
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQyOTEwMTIsImV4cCI6MTc4NDI5MTkxMn0.fP_7Zedpsst_qcrym-rAaRVAQaYMN_o5oPtsTKooFGg
 
