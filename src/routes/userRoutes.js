@@ -8,6 +8,7 @@ const router = express.Router();
 router.get("/profile", userAuthMiddleware, async (req, res) => {
   const user = req.userInfo;
   user.password = undefined;
+  user.googleId = undefined;
   user.__v = undefined;
   user.refreshJWT = undefined;
 

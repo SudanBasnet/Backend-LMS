@@ -22,10 +22,14 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       index: 1,
+      lowercase: true,
+      trim: true,
     },
     password: {
       type: String,
-      required: true,
+      required() {
+        return !this.googleId;
+      },
     },
     role: {
       type: String,
@@ -34,6 +38,25 @@ const userSchema = new mongoose.Schema(
     },
     refreshJWT: {
       type: String,
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      index: true,
+    },
+    authProviders: {
+      type: [String],
+      enum: ["password", "google"],
+      default: ["password"],
+    },
+    avatarUrl: {
+      type: String,
+      trim: true,
+    },
+    emailVerified: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },

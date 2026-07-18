@@ -3,6 +3,7 @@ import { validateData } from "./joiValidation.js";
 import {
   EMAIL_REQ,
   FNAME_REQ,
+  GOOGLE_CREDENTIAL_REQ,
   LNAME_REQ,
   OTP,
   PASSWORD_REQ,
@@ -41,6 +42,15 @@ export const loginDataValidation = (req, res, next) => {
     password: PASSWORD_REQ,
   };
   validateData({ req, res, next, obj });
+};
+
+export const googleAuthDataValidation = (req, res, next) => {
+  validateData({
+    req,
+    res,
+    next,
+    obj: { credential: GOOGLE_CREDENTIAL_REQ },
+  });
 };
 
 //!password reset Data Validation

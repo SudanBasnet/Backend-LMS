@@ -2,6 +2,7 @@ import { responseClient } from "../middleware/responseClient.js";
 import {
   createNewUser,
   getUserByEmail,
+  getUserByGoogleId,
   updateUser,
 } from "../models/User/UserModel.js";
 import { comparePassword, hashPassword } from "../utils/bcrypt.js";
@@ -19,11 +20,13 @@ import {
 } from "../services/email/emailService.js";
 import { getJwts } from "../utils/jwt.js";
 import { generateRandomOTP } from "../utils/randomGenerator.js";
+import { OAuth2Client } from "google-auth-library";
+
+const googleClient = new OAuth2Client();
 
 //!insert new user
 export const insertNewUser = async (req, res, next) => {
   try {
-    console.log(req.body);
     //*hashing password
     const { password } = req.body;
     req.body.password = hashPassword(password);
@@ -99,19 +102,16 @@ export const activateUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
     const user = await getUserByEmail(email);
-    if (user?._id) {
-      console.log(user);
+    if (user?._id && user.password) {
       //* Compare password
 
       const isPassMatch = comparePassword(password, user.password);
       if (isPassMatch) {
-        console.log("authenticated successful");
         //* Mark the user as active after a successful login
         await updateUser({ _id: user._id }, { status: "active" });
         //*Create JWT
-        const jwts = await getJwts(email);
+        const jwts = await getJwts(user.email);
         //*response JWT
         return responseClient({
           req,
@@ -125,6 +125,112 @@ export const loginUser = async (req, res, next) => {
     const message = "Invalid credentials";
     const statusCode = 401;
     responseClient({ req, res, message, statusCode });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const authenticateWithGoogle = async (req, res, next) => {
+  try {
+    const googleClientId = process.env.GOOGLE_CLIENT_ID;
+    if (!googleClientId) {
+      const error = new Error("Google sign-in is not configured");
+      error.statusCode = 500;
+      throw error;
+    }
+
+    let googleProfile;
+    try {
+      const ticket = await googleClient.verifyIdToken({
+        idToken: req.body.credential,
+        audience: googleClientId,
+      });
+      googleProfile = ticket.getPayload();
+    } catch {
+      return responseClient({
+        req,
+        res,
+        message: "Google credential is invalid or expired",
+        statusCode: 401,
+      });
+    }
+
+    const {
+      sub: googleId,
+      email,
+      email_verified: emailVerified,
+      given_name: givenName,
+      family_name: familyName,
+      name = "",
+      picture: avatarUrl,
+    } = googleProfile || {};
+
+    if (!googleId || !email || !emailVerified) {
+      return responseClient({
+        req,
+        res,
+        message: "A verified Google email address is required",
+        statusCode: 401,
+      });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    let user = await getUserByGoogleId(googleId);
+
+    if (!user) {
+      user = await getUserByEmail(normalizedEmail);
+
+      if (user?._id) {
+        const linkedProviders = user.password
+          ? ["password", "google"]
+          : ["google"];
+        user = await updateUser(
+          { _id: user._id },
+          {
+            $set: {
+              googleId,
+              avatarUrl,
+              emailVerified: true,
+              status: "active",
+            },
+            $addToSet: { authProviders: { $each: linkedProviders } },
+          },
+        );
+      } else {
+        const nameParts = name.trim().split(/\s+/).filter(Boolean);
+        user = await createNewUser({
+          fName: givenName?.trim() || nameParts[0] || "Google",
+          lName:
+            familyName?.trim() || nameParts.slice(1).join(" ") || "Member",
+          email: normalizedEmail,
+          googleId,
+          authProviders: ["google"],
+          avatarUrl,
+          emailVerified: true,
+          status: "active",
+          role: "user",
+        });
+      }
+    } else {
+      const linkedProviders = user.password
+        ? ["password", "google"]
+        : ["google"];
+      user = await updateUser(
+        { _id: user._id },
+        {
+          $set: { avatarUrl, emailVerified: true, status: "active" },
+          $addToSet: { authProviders: { $each: linkedProviders } },
+        },
+      );
+    }
+
+    const jwts = await getJwts(user.email);
+    return responseClient({
+      req,
+      res,
+      message: "Google authentication successful",
+      payload: jwts,
+    });
   } catch (error) {
     next(error);
   }

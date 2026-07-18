@@ -44,6 +44,18 @@ Content-Type: application/json
   
 }
 
+###Login User
+
+POST {{rootUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+
+  "email": "sdnbasnet5@gmail.com",
+  "password": "Shreey@nsh123"
+  
+}
+
 
 
 ###get User
@@ -135,4 +147,34 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc
 }
 
 
+###review books
+
+POST {{rootUrl}}/api/v1/reviews
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQyNjc5MjAsImV4cCI6MTc4NDI2ODgyMH0.3qlNyBiWvnCkAXuhKrpfcrIE5r-jhflbrar4JQpKgO0
+
+{
+  "bookId": "6a4f4685eb6dbcfc12bc9df7",
+  "title":"test",
+  "reviewMessage":"test",
+  "rating":"5",
+  "borrowId":"6a58aafbf24eec75c3716f88"
+}
+
+###get all reviews
+
+GET {{rootUrl}}/api/v1/reviews/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldEBnbWFpbC5jb20iLCJpYXQiOjE3ODQyOTEwMTIsImV4cCI6MTc4NDI5MTkxMn0.fP_7Zedpsst_qcrym-rAaRVAQaYMN_o5oPtsTKooFGg
+
+
+###update reviews
+PATCH {{rootUrl}}/api/v1/reviews/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNkbmJhc25ldDVAZ21haWwuY29tIiwiaWF0IjoxNzg0Mjk1NjkyLCJleHAiOjE3ODQyOTY1OTJ9.G0hBgyt0ueBkP_mxFXls1Zn8uDTtSpmrTwUSZW_sdhs
+
+{
+  "_id":"6a59c4ec79b45db2035795b6",
+  "isApproved":true
+}
 
