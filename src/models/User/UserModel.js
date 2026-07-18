@@ -11,7 +11,12 @@ export const updateUser = (filter, update) => {
 
 //!Get user
 export const getUserByEmail = (email) => {
-  return UserSchema.findOne({ email });
+  if (typeof email !== "string") return null;
+  return UserSchema.findOne({ email: email.trim().toLowerCase() });
+};
+
+export const getUserByGoogleId = (googleId) => {
+  return UserSchema.findOne({ googleId });
 };
 
 //!Get one user

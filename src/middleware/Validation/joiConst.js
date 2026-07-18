@@ -25,6 +25,7 @@ export const SESSION_REQ = Joi.string().min(10).max(30).required();
 
 export const TOKEN = Joi.string().min(10).max(30);
 export const TOKEN_REQ = Joi.string().min(5).max(40).required();
+export const GOOGLE_CREDENTIAL_REQ = Joi.string().min(100).required();
 export const OTP = Joi.number().min(999).max(9999).required();
 
 //!Book Constants
